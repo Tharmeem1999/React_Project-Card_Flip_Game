@@ -43,6 +43,21 @@ const App = () => {
   // (used as a key or signal)
   const [resetCounter, setResetCounter] = useState(0);
 
+  // Function to initialize or restart the game with a given grid size
+  const reInitializeGame = (size) => {
+    // Update the grid size state with the new size selected
+    setGridSize(size);
+
+    // Generate a new shuffled deck based on the new grid size
+    setDeck(createNewDeck(size));
+
+    // Reset the number of moves to 0 for the new game
+    setMoves(0);
+
+    // Reset the number of mtches to 0 for the new game
+    setMatches(0);
+  };
+
   return (
     <div>
       <TempComponent
@@ -60,7 +75,7 @@ const App = () => {
       </h1>
 
       {/* Settings: lets user choose grid size and restart the game */}
-      <Settings />
+      <Settings onGridChange={reInitializeGame} />
 
       {/* Scoreboard: shows number of moves, matches, and total pairs  */}
       <Scoreboard />
