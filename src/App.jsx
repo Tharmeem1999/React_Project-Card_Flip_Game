@@ -81,7 +81,7 @@ const App = () => {
       <Scoreboard />
 
       {/* ResetButton: allows resetting the current game */}
-      <ResetButton />
+      <ResetButton onReset={() => reInitializeGame(gridSize)} />
 
       {/* GameBoard: render the card grid and handles gameplay */}
       <GameBoard />
