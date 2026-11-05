@@ -1,13 +1,61 @@
+import { useState } from "react";
 import Settings from "./components/Settings";
 import Scoreboard from "./components/Scoreboard";
 import ResetButton from "./components/ResetButton";
 import GameBoard from "./components/GameBoard";
 import Graffiti from "./components/Graffiti";
+import TempComponent from "./components/TempComponent";
+import generateIcons from "./utils/generateIcons";
+import shuffleDeck from "./utils/shuffleDeck";
 
 const App = () => {
+  // State to store the current grid size (e.g., 4x4)
+  const [gridSize, setGridSize] = useState(4);
+
+  // Function to create a new shuffled deck of emoji pairs based on the grif size
+  const createNewDeck = (size) => {
+    // Calculate how many unique icons are needed (half the number of cards)
+    const iconCount = (size * size) / 2;
+
+    // Generate that many unique random icons
+    const icons = generateIcons(iconCount);
+
+    // Duplicate the icons to create pairs (each icon appears twice)
+    const newDeck = [...icons, ...icons]
+
+    // Shuffle the full deck so the pairs are randomly distributed 
+    return shuffleDeck(newDeck);
+  }
+
+  // Lazily initialize the desk state.
+  // The function passed to useState is only executed on the initial render.
+  // This sets up the board correctly from the start wothout an effect.
+  // State to store the current deck of cards (intialized only once).
+  const [deck, setDeck] = useState(() => createNewDeck(4));
+
+  // State to count the number of moves made by the player.
+  const [moves, setMoves] = useState(0);
+
+  // State to track how many matches the player has found
+  const [matches, setMatches] = useState(0);
+
+  // State to trigger a re-render/ reset in the GameBoard
+  // (used as a key or signal)
+  const [resetCounter, setResetCounter] = useState(0);
+
   return (
     <div>
-      <h1 className="text-3xl font-bold text-center">
+      <TempComponent
+        deck={deck}
+        gridSize={gridSize}
+        moves={moves}
+        matches={matches}
+        resetCounter={resetCounter}
+        setMoves={setMoves}
+        setMatches={setMatches}
+      />
+
+      <h1 className="text-3xl font-bold text-center mb-4">
         Memory Match Mania
       </h1>
 
