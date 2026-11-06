@@ -59,7 +59,7 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div className="h-screen flex flex-col p-4 max-w-screen-md mx-auto bg-gradient-to-bl from-cyan-100 via-blue-50 to-white">
       <TempComponent
         deck={deck}
         gridSize={gridSize}
@@ -88,7 +88,15 @@ const App = () => {
       <ResetButton onReset={() => reInitializeGame(gridSize)} />
 
       {/* GameBoard: render the card grid and handles gameplay */}
-      <GameBoard />
+      <div className="flex-grow">
+        <GameBoard
+          key={resetCounter}
+          gridSize={gridSize}
+          deck={deck}
+          setMoves={setMoves}
+          setMatches={setMatches}
+        />
+      </div>
 
       {/* Graffiti: shows a celebration when all matches are made */}
       {matches === deck.length / 2 && <Graffiti />}
