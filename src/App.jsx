@@ -91,7 +91,7 @@ const App = () => {
       <GameBoard />
 
       {/* Graffiti: shows a celebration when all matches are made */}
-      <Graffiti />
+      {matches === deck.length / 2 && <Graffiti />}
     </div>
   )
 };
