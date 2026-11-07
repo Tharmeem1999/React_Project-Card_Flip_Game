@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useImperativeHandle, forwardRef } from "react";
 
-const Card = ({ icon, gridSize, onClick }) => {
+const Card = ({ icon, gridSize, onClick }, ref) => {
     const [flipped, setFlipped] = useState(false);
 
     let baseClass = gridSize === 4
@@ -14,13 +14,22 @@ const Card = ({ icon, gridSize, onClick }) => {
         " border rounded " +
         " backface-hidden ";
 
+    // Expose functions to parent
+    useImperativeHandle(ref, () => ({
+        flip: () => setFlipped(true),
+        unflip: () => setFlipped(false),
+        get flipped() {
+            return flipped;
+        },
+        get icon() {
+            return icon;
+        },
+    }));
+
     return (
         <div
             className="w-full h-full cursor-pointer select-none perspective"
-            onClick={() => {
-                setFlipped(!flipped);
-                onClick?.();        // Callback for GameBoard logic
-            }}
+            onClick={onClick}
         >
             <div
                 className={`
@@ -56,4 +65,4 @@ const Card = ({ icon, gridSize, onClick }) => {
     );
 };
 
-export default Card;
+export default forwardRef(Card);
