@@ -50,7 +50,14 @@ const GameBoard = ({ gridSize, deck, setMoves, setMatches }) => {
             lockBoard.current = false;
 
             // Increment match count
-            setMatches((prev) => prev + 1);
+            setMatches((prev) => {
+                if (prev + 1 === deck.length / 2) {
+                    // Play a victory sound 
+                    const audio = new Audio("/sounds/win.mp3");
+                    audio.play();
+                }
+                return prev + 1
+            });
         } else {
             // If theey don't match, wait 1 second then unflip both
             setTimeout(() => {
