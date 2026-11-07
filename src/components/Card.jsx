@@ -1,4 +1,5 @@
 import { useState, useImperativeHandle, forwardRef } from "react";
+import playFlipSoundOnce from "../utils/playFlipSoundOnce";
 
 const Card = ({ icon, gridSize, onClick }, ref) => {
     const [flipped, setFlipped] = useState(false);
@@ -16,8 +17,14 @@ const Card = ({ icon, gridSize, onClick }, ref) => {
 
     // Expose functions to parent
     useImperativeHandle(ref, () => ({
-        flip: () => setFlipped(true),
-        unflip: () => setFlipped(false),
+        flip: () => {
+            setFlipped(true);
+            playFlipSoundOnce();
+        },
+        unflip: () => {
+            setFlipped(false);
+            playFlipSoundOnce();
+        },
         get flipped() {
             return flipped;
         },
