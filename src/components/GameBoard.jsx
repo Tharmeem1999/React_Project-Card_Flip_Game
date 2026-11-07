@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import Card from "./Card";
 
-const GameBoard = ({ gridSize, deck, setMoves, setMatches }) => {
+const GameBoard = ({ gridSize, deck, setMoves, setMatches, key }) => {
     // Array of refs to access each card instance (to call flip/ unflip methods)
     const cardRefs = useRef([]);
 
